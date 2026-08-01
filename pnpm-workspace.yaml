@@ -1,8 +1,1 @@
-onlyBuiltDependencies:
-  - esbuild
-  - vue-demi
-  - @parcel/watcher
-  - vite
-  - sass
-  - @swc/core
-  - @esbuild/linux-arm64
+dangerouslyAllowAllBuilds: true
