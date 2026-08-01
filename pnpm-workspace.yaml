@@ -4,3 +4,5 @@ onlyBuiltDependencies:
   - @parcel/watcher
   - vite
   - sass
+  - @swc/core
+  - @esbuild/linux-arm64
