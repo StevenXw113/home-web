@@ -1,0 +1,21 @@
+# .cmdb/build.yaml —— 平台按探测结果生成，合并即生效。
+#
+# 这是「研发拥有的那一半」配置（设计文档 §9.1）：构建怎么做由你决定。副本数、内存上限、
+# 探针参数不在这里，写进来也不会生效——那一半属于 SRE 维护的 Deployment Profile，
+# 要改走平台界面。
+#
+# 平台探测时的取舍：由平台脚手架生成：优雅停机、健康检查与指标端点已接好（impl/01 §5.5）
+version: "1"
+app: cmdb-test-app
+
+build:
+  # language 写死而不是每次重新探测：依赖变化会让探测结论跟着变，而「构建计划跟着依赖变」
+  # 是没人预料到的。写在这里之后，探测只在接入时参与一次（impl/01 §2.1 第 1 条）。
+  language: go
+  # steps 留空 = 用平台按 go 给的默认计划：deps · vet · test · build。
+  # 要自定义就把每一步都写出来——平台不会把你的 steps 与默认计划合并，写一半只会跑那一半。
+  steps: []
+  artifact:
+    type: image
+    # 本次 MR 一并生成了 Dockerfile。想接管它就把路径填在下面，平台从此不再改那个文件。
+    dockerfile: "Dockerfile"
